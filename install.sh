@@ -6,7 +6,10 @@
 # old one instead: rename replaces the directory entry and leaves the old inode mapped until
 # the process lets go of it.
 set -euo pipefail
-DEST=/usr/lib/x86_64-linux-gnu/qt6/plugins/kwin/effects/plugins
+# Ask Qt where its plugins live rather than hardcoding a distribution's layout. Note the second
+# "plugins": a .so in kwin/effects/ is found by KPluginMetaData but never loaded, with no error.
+QT_PLUGINS=$(qmake6 -query QT_INSTALL_PLUGINS 2>/dev/null || echo /usr/lib/x86_64-linux-gnu/qt6/plugins)
+DEST="$QT_PLUGINS/kwin/effects/plugins"
 SRC="$(dirname "$0")/build/clip2output.so"
 [ -f "$SRC" ] || { echo "build it first: cmake -S . -B build && cmake --build build -j4" >&2; exit 1; }
 sudo mkdir -p "$DEST"
