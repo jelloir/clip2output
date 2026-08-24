@@ -1,0 +1,9 @@
+{
+    "KPlugin": {
+        "Description": "Clips each window to the output it is assigned to",
+        "EnabledByDefault": false,
+        "Id": "clip2output",
+        "License": "GPL-3.0-or-later",
+        "Name": "Clip Windows To Their Output"
+    }
+}
